@@ -43,7 +43,6 @@ class Package_Update extends Package_Base {
 			'config',
 			'filter',
 			'map',
-			'setting',
 		];
 	}
 }
