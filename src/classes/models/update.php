@@ -19,40 +19,15 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
  * Class Update
  * @package WP_Framework_Update\Classes\Models
  */
-class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook {
+class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_Core\Interfaces\Hook, \WP_Framework_Presenter\Interfaces\Presenter {
 
-	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Update\Traits\Package;
-
-	/**
-	 * setup settings
-	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
-	private function setup_settings() {
-		$key = $this->app->is_theme ? 'ThemeURI' : 'PluginURI';
-		$uri = $this->app->get_plugin_data( $key );
-		if ( ! empty( $uri ) && $this->app->utility->starts_with( $uri, 'https://wordpress.org' ) ) {
-			$this->app->setting->edit_setting( 'check_update', 'default', false );
-		}
-	}
+	use \WP_Framework_Core\Traits\Singleton, \WP_Framework_Core\Traits\Hook, \WP_Framework_Presenter\Traits\Presenter, \WP_Framework_Update\Traits\Package;
 
 	/**
 	 * setup update
 	 */
 	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_update() {
-		$update_info_file_url = $this->app->get_config( 'config', 'update_info_file_url' );
-		if ( ! empty( $update_info_file_url ) ) {
-			if ( $this->apply_filters( 'check_update' ) ) {
-				\Puc_v4_Factory::buildUpdateChecker(
-					$update_info_file_url,
-					$this->app->plugin_file,
-					$this->app->plugin_name
-				);
-			}
-		} else {
-			$this->app->setting->remove_setting( 'check_update' );
-		}
-
 		$this->show_plugin_update_notices();
 	}
 
@@ -65,7 +40,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			$url         = $this->app->utility->array_get( $data, 'PluginURI' );
 			$notices     = $this->get_upgrade_notices( $new_version, $url );
 			if ( ! empty( $notices ) ) {
-				$this->app->get_view( $this, 'admin/include/update', [
+				$this->get_view( 'admin/include/update', [
 					'notices' => $notices,
 				], true );
 			}
