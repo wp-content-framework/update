@@ -16,6 +16,12 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 return [
 
 	// readme
-	'readme_file_check_url' => '',
+	'readme_file_check_url'               => '',
+
+	// upgrade notice cache duration
+	'upgrade_notice_cache_duration'       => DAY_IN_SECONDS,
+
+	// upgrade notice empty cache duration
+	'upgrade_notice_empty_cache_duration' => 10 * MINUTE_IN_SECONDS,
 
 ];
