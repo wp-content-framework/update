@@ -23,6 +23,8 @@
 |設定値|説明|
 |---|---|
 |readme_file_check_url|Upgrade Noticeを取得するreadmeファイルのURLを設定|
+|upgrade_notice_cache_duration|更新情報をキャッシュする期間(秒) \[default = 86400]|
+|upgrade_notice_empty_cache_duration|更新情報が空であったことをキャッシュする期間(秒) \[default = 600]|
 
 # Author
 
