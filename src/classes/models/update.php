@@ -123,7 +123,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		if ( false === $upgrade_notice ) {
 			$upgrade_notice = $this->get_upgrade_notice( $slug );
 			if ( $upgrade_notice ) {
-				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+				set_transient( $transient_name, $upgrade_notice, $this->app->get_config( 'config', 'upgrade_notice_cache_duration' ) );
+			} else {
+				set_transient( $transient_name, '', $this->app->get_config( 'config', 'upgrade_notice_empty_cache_duration' ) );
 			}
 		}
 
