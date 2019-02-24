@@ -2,7 +2,7 @@
 /**
  * WP_Framework_Update Classes Models Update
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @author technote-space
  * @copyright technote-space All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -174,8 +174,8 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		if ( preg_match( '#==\s*Upgrade Notice\s*==([\s\S]+?)==#', $content, $matches ) ) {
 			$version = false;
 			foreach ( (array) preg_split( '~[\r\n]+~', trim( $matches[1] ) ) as $line ) {
-				/** @noinspection HtmlUnknownTarget */
 				$line = preg_replace( '~\[\[([^\]]*)\]\]\(([^\)]*)\)~', '<span style="${2}">${1}</span>', $line );
+				/** @noinspection HtmlUnknownTarget */
 				$line = preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
 				$line = preg_replace( '#\A\s*\*+\s*#', '', $line );
 				$line = preg_replace( '#\*\*\s*([^*]+)\s*\*\*#', '<b>${1}</b>', $line );
