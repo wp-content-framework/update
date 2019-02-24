@@ -15,6 +15,12 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 
 return [
 
+	// local test upgrade notice
+	'local_test_upgrade_notice'           => false,
+
+	// local test upgrade version
+	'local_test_upgrade_version'          => null,
+
 	// readme
 	'readme_file_check_url'               => '',
 
