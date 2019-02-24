@@ -157,8 +157,12 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 			$version = false;
 			foreach ( (array) preg_split( '~[\r\n]+~', trim( $matches[1] ) ) as $line ) {
 				/** @noinspection HtmlUnknownTarget */
+				$line = preg_replace( '~\[\[([^\]]*)\]\]\(([^\)]*)\)~', '<span style="${2}">${1}</span>', $line );
 				$line = preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
 				$line = preg_replace( '#\A\s*\*+\s*#', '', $line );
+				$line = preg_replace( '#\*\*\s*([^*]+)\s*\*\*#', '<b>${1}</b>', $line );
+				$line = preg_replace( '#`\s*(.+)\s*`#', '<code>${1}</code>', $line );
+				$line = preg_replace( '#~~\s*(.+)\s*~~#', '<s>${1}</s>', $line );
 				if ( preg_match( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', $line, $m1 ) && preg_match( '#\s*(v\.?)?(\d+[\d.]*)*\s*#', $m1[1], $m2 ) ) {
 					$version = $m2[2];
 					continue;
@@ -169,6 +173,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				$line = preg_replace( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', '[ $1 ]', $line );
 				$line = trim( $line );
 				if ( '' !== $line ) {
+					$line = $this->app->utility->strip_tags( $line, [
+						'span' => [ 'style' => true ],
+					] );
 					if ( $version ) {
 						$version_notices[ $version ][] = $line;
 					} else {
