@@ -177,7 +177,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				}
 			}
 			if ( ! empty( $version_notices ) ) {
-				ksort( $version_notices );
+				uksort( $version_notices, function ( $a, $b ) {
+					return version_compare( $a, $b );
+				} );
 				foreach ( $version_notices as $version => $items ) {
 					$notices[ $version ] = $items;
 				}
