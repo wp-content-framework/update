@@ -92,11 +92,11 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$plugin_version = $this->app->get_plugin_version();
 		if ( $this->app->get_config( 'config', 'local_test_upgrade_notice' ) ) {
 			$readme = $this->app->define->plugin_dir . DS . 'readme.txt';
-			if ( is_readable( $readme ) ) {
+			if ( @is_readable( $readme ) ) {
 				$test_version   = $this->app->get_config( 'config', 'local_test_upgrade_version' );
 				$plugin_version = $test_version ? $test_version : $plugin_version;
 
-				return $this->parse_update_notice( file_get_contents( $readme ), $plugin_version );
+				return $this->parse_update_notice( @file_get_contents( $readme ), $plugin_version );
 			}
 
 			return false;
