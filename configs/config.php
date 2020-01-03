@@ -2,7 +2,6 @@
 /**
  * WP_Framework_Update Configs Config
  *
- * @version 0.0.4
  * @author Technote
  * @copyright Technote All Rights Reserved
  * @license http://www.opensource.org/licenses/gpl-2.0.php GNU General Public License, version 2
@@ -14,7 +13,6 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 return [
-
 	// local test upgrade notice
 	'local_test_upgrade_notice'           => false,
 
@@ -29,5 +27,4 @@ return [
 
 	// upgrade notice empty cache duration
 	'upgrade_notice_empty_cache_duration' => 10 * MINUTE_IN_SECONDS,
-
 ];
