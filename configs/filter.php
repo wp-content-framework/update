@@ -13,11 +13,9 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 return [
-
 	'update' => [
-		'admin_init'               => [
+		'admin_init' => [
 			'setup_update',
 		],
 	],
-
 ];

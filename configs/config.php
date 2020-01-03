@@ -13,7 +13,6 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 return [
-
 	// local test upgrade notice
 	'local_test_upgrade_notice'           => false,
 
@@ -28,5 +27,4 @@ return [
 
 	// upgrade notice empty cache duration
 	'upgrade_notice_empty_cache_duration' => 10 * MINUTE_IN_SECONDS,
-
 ];

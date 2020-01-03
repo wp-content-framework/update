@@ -13,7 +13,5 @@ if ( ! defined( 'WP_CONTENT_FRAMEWORK' ) ) {
 }
 
 return [
-
 	'update' => '\WP_Framework_Update\Classes\Models\Update',
-
 ];

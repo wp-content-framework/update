@@ -29,11 +29,12 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 	/**
 	 * setup update
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function setup_update() {
-		add_action( 'in_plugin_update_message-' . $this->app->define->plugin_base_name, function ( $data, $r ) {
-			$new_version = $r->new_version;
+		add_action( 'in_plugin_update_message-' . $this->app->define->plugin_base_name, function ( $data, $response ) {
+			$new_version = $response->new_version;
 			$url         = $this->app->array->get( $data, 'PluginURI' );
 			$notices     = $this->get_upgrade_notices( $new_version, $url );
 			if ( ! empty( $notices ) ) {
@@ -46,8 +47,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 	/**
 	 * @return string|false
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function get_config_readme_url() {
 		$url = $this->app->get_config( 'config', 'readme_file_check_url' );
 		if ( ! empty( $url ) ) {
@@ -59,8 +61,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 
 	/**
 	 * @return string|false
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function get_readme_url_from_update_info_url() {
 		$url = $this->app->get_config( 'config', 'update_info_file_url' );
 		if ( ! empty( $url ) ) {
@@ -76,8 +79,9 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @param string|false $slug
 	 *
 	 * @return string|false
+	 * @noinspection PhpUnusedPrivateMethodInspection
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
-	/** @noinspection PhpUnusedPrivateMethodInspection */
 	private function get_trunk_readme_url( $slug ) {
 		return $slug ? $this->apply_filters( 'trunk_readme_url', 'https://plugins.svn.wordpress.org/' . $slug . '/trunk/readme.txt', $slug ) : false;
 	}
@@ -96,11 +100,11 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 		$plugin_version = $this->app->get_plugin_version();
 		if ( $this->app->get_config( 'config', 'local_test_upgrade_notice' ) ) {
 			$readme = $this->app->define->plugin_dir . DS . 'readme.txt';
-			if ( @is_readable( $readme ) ) {
+			if ( @is_readable( $readme ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 				$test_version   = $this->app->get_config( 'config', 'local_test_upgrade_version' );
 				$plugin_version = $test_version ? $test_version : $plugin_version;
 
-				return $this->parse_update_notice( @file_get_contents( $readme ), $plugin_version );
+				return $this->parse_update_notice( $this->app->file->get_contents( $readme ), $plugin_version );
 			}
 
 			return false;
@@ -159,6 +163,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	 * @return false|string
 	 */
 	private function get_plugin_slug( $url ) {
+		$matches = null;
 		if ( preg_match( '#\Ahttps://(\w+\.)?wordpress.org/plugins/(.+?)/?\z#', $url, $matches ) ) {
 			return $matches[2];
 		}
@@ -175,6 +180,7 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 	private function parse_update_notice( $content, $plugin_version ) {
 		$notices         = [];
 		$version_notices = [];
+		$matches         = null;
 		if ( preg_match( '#==\s*Upgrade Notice\s*==([\s\S]+?)==#', $content, $matches ) ) {
 			$version = false;
 			foreach ( (array) preg_split( '~[\r\n]+~', trim( $matches[1] ) ) as $line ) {
@@ -185,6 +191,8 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				$line = preg_replace( '#\*\*\s*([^*]+)\s*\*\*#', '<b>${1}</b>', $line );
 				$line = preg_replace( '#`\s*(.+)\s*`#', '<code>${1}</code>', $line );
 				$line = preg_replace( '#~~\s*(.+)\s*~~#', '<s>${1}</s>', $line );
+				$m1   = null;
+				$m2   = null;
 				if ( preg_match( '#\A\s*=\s*([^\s]+)\s*=\s*\z#', $line, $m1 ) && preg_match( '#\s*(v\.?)?(\d+[\d.]*)*\s*#', $m1[1], $m2 ) ) {
 					$version = $m2[2];
 					continue;
@@ -206,8 +214,8 @@ class Update implements \WP_Framework_Core\Interfaces\Singleton, \WP_Framework_C
 				}
 			}
 			if ( ! empty( $version_notices ) ) {
-				uksort( $version_notices, function ( $a, $b ) {
-					return version_compare( $a, $b );
+				uksort( $version_notices, function ( $notice1, $notice2 ) {
+					return version_compare( $notice1, $notice2 );
 				} );
 				foreach ( $version_notices as $version => $items ) {
 					$notices[ $version ] = $items;
