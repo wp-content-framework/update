@@ -117,16 +117,16 @@
         },
         {
             "name": "wp-content-framework/presenter",
-            "version": "v1.0.8",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-content-framework/presenter.git",
-                "reference": "3e5ee3c7e316d27284c08040ea0b7adf4eaf7145"
+                "reference": "88ca8d968bd946b50b3752009417f5fd04fad3d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/3e5ee3c7e316d27284c08040ea0b7adf4eaf7145",
-                "reference": "3e5ee3c7e316d27284c08040ea0b7adf4eaf7145",
+                "url": "https://api.github.com/repos/wp-content-framework/presenter/zipball/88ca8d968bd946b50b3752009417f5fd04fad3d6",
+                "reference": "88ca8d968bd946b50b3752009417f5fd04fad3d6",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-06-12T13:00:22+00:00"
+            "time": "2020-06-19T06:20:11+00:00"
         }
     ],
     "packages-dev": [
@@ -718,7 +718,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.1.1",
+            "version": "v5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -798,7 +798,7 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.1.1",
+            "version": "v5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
@@ -947,7 +947,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.1.1",
+            "version": "v5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
